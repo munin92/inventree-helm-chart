@@ -15,5 +15,5 @@
       {{- end -}}
     {{- end -}}
   {{- end -}}
-  {{- join "," ($data |uniq) -}}
+  {{- join "," ($data |uniq) | quote -}}
 {{- end -}}
