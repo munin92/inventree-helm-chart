@@ -54,6 +54,7 @@ spec:
             {{- end -}}
 {{- (include "inventree.renderSecrets" (dict "data" .Values.global.cacheSecrets)) | nindent 10 -}}
           {{- (include "inventree.renderSecrets" (dict "data" .Values.global.dbSecrets)) | nindent 10 }}
+          {{- (include "inventree.renderSecrets" (dict "data" .Values.global.emailSecrets)) | nindent 10 -}}
           {{/*
           # TODO: Figure out a way to check status
           {{- with .Values.worker.livenessProbe }}
