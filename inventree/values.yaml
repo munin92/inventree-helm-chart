@@ -59,6 +59,41 @@ global:
   # prepares static data for web frontend.
   initEnabled: True
 
+  # Single Sign On (SSO) aka Social Login configuration.
+  ssoConfig:
+    # A list of required provider backends, prefixed with `allauth.socialaccounts.providers`
+    # Example:
+    # backends:
+    #   - "allauth.socialaccount.providers.github"
+    #   - "allauth.socialaccount.providers.openid_connect"
+    backends: []
+
+    # Secret name containing configuration for all the enabled providers.
+    # Secret must have a key named `providers` with json-formatted data
+    # containing configuration for all the providers.
+    providerSecretName:
+    ## Example:
+    ## SSO via Codeberg.org using `openid_connect`.
+    # 0. Prepare a new OAuth2 application on Codeberg.org which
+    # will give you Client ID and Client secret values.
+    # 1. Create a YAML file (`providers.yaml`) with provider configuration:
+    # ```yaml
+    # openid_connect:
+    #   APPS:
+    #     # We can have multiple apps with `openid_connect` backend
+    #     - provider_id: "codeberg"
+    #       name: "Log in via Codeberg.org"
+    #       client_id: "..." # From Codeberg.org OAuth2 application setup
+    #       secret: "..."    # From Codeberg.org OAuth2 application setup
+    #       settings:
+    #         server_url: "https://codeberg.org"
+    # # Optionally configure more SSO providers (or apps)
+    # ```
+    # 2. Convert the YAML into single-line JSON using `yq` utility:
+    # $ yq . -o json -I=0 providers.yaml > providers.json
+    # 3. Create secret (in inventree namespace)
+    # $ kubectl create secret generic inventree-sso --from-file=providers=./providers.json --namespace inventree
+
 plugins:
   enabled: True
 

@@ -71,6 +71,19 @@ spec:
             - name: INVENTREE_CACHE_ENABLED
               value: "True"
             {{- end -}}
+            {{- with .Values.global.ssoConfig }}
+            {{- if .backends }}
+            - name: INVENTREE_SOCIAL_BACKENDS
+              value: {{ join "," .backends |squote }}
+            {{- end -}}
+            {{- if .providerSecretName }}
+            - name: INVENTREE_SOCIAL_PROVIDERS
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .providerSecretName }}
+                  key: providers
+            {{- end -}}
+            {{- end -}}
             {{- if .Values.plugins.enabled }}
             - name: INVENTREE_PLUGINS_ENABLED
               value: "True"

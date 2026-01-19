@@ -52,7 +52,7 @@ spec:
             - name: INVENTREE_CACHE_ENABLED
               value: "True"
             {{- end -}}
-{{- (include "inventree.renderSecrets" (dict "data" .Values.global.cacheSecrets)) | nindent 10 -}}
+          {{- (include "inventree.renderSecrets" (dict "data" .Values.global.cacheSecrets)) | nindent 10 -}}
           {{- (include "inventree.renderSecrets" (dict "data" .Values.global.dbSecrets)) | nindent 10 }}
           {{- (include "inventree.renderSecrets" (dict "data" .Values.global.emailSecrets)) | nindent 10 -}}
           {{/*
