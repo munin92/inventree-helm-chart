@@ -65,6 +65,10 @@ spec:
           env:
             - name: INVENTREE_SITE_URL
               value: {{ .Values.global.siteUrl }}
+           {{- range $key, $value := .Values.env }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+           {{- end }}              
             - name: INVENTREE_TRUSTED_ORIGINS
               value: {{ (include "ingress.listHosts" (dict "data" . )) -}}
             {{- if not (empty .Values.global.cacheSecrets) }}
